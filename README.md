@@ -44,3 +44,10 @@ PYTHONPATH=src python -m unittest discover -s tests
 - `.contains(text: str) -> bool` — whether the pattern occurs at least once.
 - `.transition(state: int, symbol: str) -> int` — next state from `state` on `symbol`; symbols outside the alphabet return 0.
 - `.pattern`, `.alphabet`, `.num_states` — read-only properties.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
